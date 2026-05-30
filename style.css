@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&display=swap');
+
+body, html {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f2f2f7 !important;
+}
+
+.sidebar {
+    background-color: #f2f2f7;
+    border-right: 1px solid #e5e5ea;
+}
+
+.main-content {
+    background-color: #ffffff;
+    border-top-left-radius: 20px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.02);
+    /* Transição suave ao trocar de categoria/página */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.search-bar {
+    background-color: #e3e3e8;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.category-item {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.25s ease, color 0.25s ease;
+    text-transform: capitalize;
+}
+
+.category-item:hover {
+    background-color: #e5e5ea;
+}
+
+.category-item.active {
+    background-color: #007aff;
+    color: white;
+}
+
+.category-item.active i {
+    color: white !important;
+}
+
+/* ==========================================================================
+   ANIMAÇÕES SMOOTH (TAREFAS E FILTROS)
+   ========================================================================== */
+
+/* Estado inicial de inserção da tarefa (invisível e deslocada para baixo) */
+.task-item {
+    border: none;
+    border-bottom: 1px solid #e5e5ea;
+    padding: 15px 0;
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    animation: fadeInUp 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s ease;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animação suave de saída/exclusão */
+.task-item.fade-out {
+    opacity: 0 !important;
+    transform: translateX(30px) scale(0.95) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 0 !important;
+    border: none !important;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #c7c7cc;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.1s ease;
+}
+
+.task-checkbox:active {
+    transform: scale(0.9);
+}
+
+.task-checkbox:checked {
+    background-color: #007aff;
+    border-color: #007aff;
+}
+
+.task-checkbox:checked::after {
+    content: '✔';
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.task-text {
+    font-size: 1.1rem;
+    color: #1c1c1e;
+    transition: color 0.25s ease, text-decoration 0.25s ease;
+}
+
+.task-completed .task-text {
+    text-decoration: line-through;
+    color: #8e8e93;
+}
+
+.delete-btn {
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.task-item:hover .delete-btn {
+    opacity: 1;
+}
+
+/* Efeito de transição suave de fade-in para troca de categoria */
+.fade-in-content {
+    animation: fadeInContent 0.3s ease-out forwards;
+}
+
+@keyframes fadeInContent {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        border-radius: 0;
+    }
+    .sidebar {
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #e5e5ea;
+    }
+    .delete-btn {
+        opacity: 1;
+    }
+}

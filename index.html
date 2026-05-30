@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f2f2f7">
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-md-4 col-lg-3 sidebar p-3 d-flex flex-column">
+                <h4 class="mb-4 ps-2 fw-bold" style="color: #007aff;">Lembretes</h4>
+                
+                <div class="input-group mb-4 search-bar">
+                    <span class="input-group-text border-0 bg-transparent"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" class="form-control border-0 bg-transparent shadow-none" placeholder="Buscar">
+                </div>
+
+                <h6 class="text-muted fw-bold ps-2 mb-3">Minhas Listas</h6>
+                <ul class="list-group list-group-flush mb-auto" id="category-list">
+                    </ul>
+
+                <div class="mt-4 p-3 bg-white rounded-4 shadow-sm text-center">
+                    <h6 class="text-muted mb-1">Produtividade Hoje</h6>
+                    <h2 class="fw-bold mb-0 text-primary" id="productivity-counter">0</h2>
+                    <small class="text-muted">Tarefas concluídas</small>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-lg-9 main-content p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold m-0" id="current-category-title" style="color: #007aff;">Todas as Tarefas</h2>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-light rounded-circle shadow-sm" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item filter-btn" href="#" data-filter="all">Todas</a></li>
+                            <li><a class="dropdown-item filter-btn" href="#" data-filter="pending">Pendentes</a></li>
+                            <li><a class="dropdown-item filter-btn" href="#" data-filter="completed">Concluídas</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <form id="task-form" class="mb-4">
+                    <div class="row g-2 bg-white p-3 rounded-4 shadow-sm align-items-center">
+                        <div class="col-12 col-lg-5">
+                            <input type="text" id="task-input" class="form-control border-0 bg-light shadow-none py-2 px-3 rounded-3" placeholder="Novo lembrete..." required>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <input type="text" id="task-category" list="categories-datalist" class="form-control border-0 bg-light shadow-none py-2 px-3 rounded-3" placeholder="Categoria" required>
+                            <datalist id="categories-datalist"></datalist>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <input type="datetime-local" id="task-datetime" class="form-control border-0 bg-light shadow-none py-2 px-3 rounded-3 text-muted">
+                        </div>
+                        <div class="col-12 col-lg-1 d-grid">
+                            <button class="btn btn-primary py-2 fw-bold rounded-3" type="submit">Criar</button>
+                        </div>
+                    </div>
+                </form>
+
+                <ul class="list-group list-group-flush" id="task-list">
+                    </ul>
+
+                <div class="mt-5 p-4 bg-white rounded-4 shadow-sm install-section">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-download me-2"></i>Como Instalar este App</h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-3 h-100">
+                                <h6 class="fw-bold"><i class="bi bi-apple me-1"></i> iOS (Safari)</h6>
+                                <p class="small text-muted mb-0">Toque em Compartilhar e selecione <strong>"Adicionar à Tela de Início"</strong>.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-3 h-100">
+                                <h6 class="fw-bold"><i class="bi bi-android2 me-1"></i> Android (Chrome)</h6>
+                                <p class="small text-muted mb-0">Toque nos três pontos e selecione <strong>"Adicionar à Tela Inicial"</strong>.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-3 h-100">
+                                <h6 class="fw-bold"><i class="bi bi-laptop me-1"></i> Desktop (Chrome)</h6>
+                                <p class="small text-muted mb-0">Clique no ícone de instalação na barra de endereço (URL).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="editModalLabel" style="color: #007aff;"><i class="bi bi-pencil-square me-2"></i>Editar Lembrete</h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="edit-task-form">
+                    <div class="modal-body">
+                        <input type="hidden" id="edit-task-id">
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Nome do Lembrete</label>
+                            <input type="text" id="edit-task-input" class="form-control border-0 bg-light py-2 px-3 rounded-3 shadow-none" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Categoria / Lista</label>
+                            <input type="text" id="edit-task-category" class="form-control border-0 bg-light py-2 px-3 rounded-3 shadow-none" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Agendar Alerta (Opcional)</label>
+                            <input type="datetime-local" id="edit-task-datetime" class="form-control border-0 bg-light py-2 px-3 rounded-3 shadow-none text-muted">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-light rounded-3 fw-medium" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-3 fw-bold px-4">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
