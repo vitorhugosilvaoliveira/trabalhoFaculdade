@@ -10,7 +10,7 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
-  self.skipWaitinng()//alterei aqui
+  self.skipWaiting()//alterei aqui
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -20,7 +20,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  ebent.waitUntil(
+  event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
         keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
